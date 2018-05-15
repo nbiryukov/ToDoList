@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #c1c4d460;
+    height: 70px;
+}
+
+.logo {
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: lighter;
+    margin: 0 50px 0 0;
+}

@@ -1,0 +1,30 @@
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(237, 237, 237)
+}
+
+.checkbox, .button {
+    flex-basis: 5%;
+}
+
+.task {
+    font-size: 20px;
+    flex-basis: 90%;
+    text-align: left;
+    word-break: break-all;
+}
+
+.taskChecked {
+    font-size: 20px;
+    flex-basis: 90%;
+    text-align: left;
+    word-break: break-all;
+    text-decoration: line-through;
+}
