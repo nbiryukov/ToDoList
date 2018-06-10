@@ -12,6 +12,7 @@ app.use(express.static(path.resolve(__dirname + '../..' + '/public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', api);
 
 var port = process.env.PORT || '3000';
 app.set('port', port);
@@ -20,5 +21,3 @@ server.listen(port, function () {
   console.log('server is running on port ' + port);
 });
 
-
-app.use('/', api);
