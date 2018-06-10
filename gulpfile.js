@@ -4,6 +4,7 @@ const debug = require("gulp-debug");
 const browserSync = require("browser-sync").create();
 const webpack = require('webpack');
 const gutil = require('gulp-util');
+const nodemon = require('gulp-nodemon');
 const notifier = require('node-notifier');
 const webpackConfig = require('./webpack.config.js');
 const statsLog = { // для красивых логов в консоли
@@ -60,6 +61,14 @@ gulp.task("build-js", (done) => {
   }
 });
 
+gulp.task("server", (done) => {
+  nodemon({
+    script: './server/server.js',
+  });
+  console.log("Start server");
+  done();
+});
+
 gulp.task('watch', gulp.series('browser-sync-init', function () {
 
   gulp.watch(`${appDir}/**/*.jsx?$`, gulp.series('build-js'));
@@ -69,3 +78,4 @@ gulp.task('watch', gulp.series('browser-sync-init', function () {
 }));
 
 gulp.task('default', gulp.series('build-html', 'build-js', 'watch'));
+gulp.task('start', gulp.series('build-html', 'build-js', 'server'));
