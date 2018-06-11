@@ -6,11 +6,63 @@ module.exports.index = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-
+    var login = req.body.login;
+    var password = req.body.password;
+    User.findOne({ login: login, password: password }, (err, user) => {
+        console.log(err);
+        console.log(user);
+        if (err) {
+            console.log(err);
+            res.json({
+                ok: false,
+                message: "запрос не прошел"
+            });
+        } else if (user != null) {
+            console.log(user);
+            res.json({
+                ok: true,
+                user: user
+            });
+        } else {
+            res.json({
+                ok: false,
+                message: "неправильно введены данные"
+            });
+        }
+    });
 };
 
 module.exports.registration = (req, res) => {
-
+    var login = req.body.login;
+    var password = req.body.password;
+    User.findOne({ login: login }, (err, user) => {
+        if (err) {
+            console.log(err);
+            res.json({
+                ok: false,
+                message: "запрос не прошел"
+            });
+        } else if (user != null) {
+            res.json({
+                ok: false,
+                message: "такой пользователь уже существует"
+            });
+        } else {
+            User.create({ login: login, password: password, todos: [] }, (err, user) => {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        ok: false,
+                        message: "запрос не прошел"
+                    });
+                } else if (user != null) {
+                    res.json({
+                        ok: true
+                    });
+                }
+            });
+        }
+    });
 };
 
 module.exports.update = (req, res) => {
