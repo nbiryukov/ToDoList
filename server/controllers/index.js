@@ -9,8 +9,6 @@ module.exports.login = (req, res) => {
     var login = req.body.login;
     var password = req.body.password;
     User.findOne({ login: login, password: password }, (err, user) => {
-        console.log(err);
-        console.log(user);
         if (err) {
             console.log(err);
             res.json({
@@ -70,7 +68,6 @@ module.exports.update = (req, res) => {
     var login = req.body.login;
     User.updateOne({ login: login }, { todos: todos }, (err, doc) => {
         if (err) {
-            console.log(err);
             res.json({
                 ok: false
             });

@@ -21,12 +21,18 @@ export default class App extends Component {
     let todos = this.state.todos;
     todos.push({ id: new Date().getTime(), done: false, task: valueTask });
     this.setState({ todos: todos });
+    if (Object.keys(this.state.user).length !== 0) {
+      this.updateTodosServer(todos);
+    }
   }
 
   deleteTask = (idTask) => {
     let newTodos = this.state.todos;
     newTodos = newTodos.filter(task => task.id != idTask);
     this.setState({ todos: newTodos });
+    if (Object.keys(this.state.user).length !== 0) {
+      this.updateTodosServer(newTodos);
+    }
   }
 
   completeTask = (idTask) => {
@@ -37,6 +43,9 @@ export default class App extends Component {
       }
     });
     this.setState({ todos: newTodos });
+    if (Object.keys(this.state.user).length !== 0) {
+      this.updateTodosServer(newTodos);
+    }
   }
 
   logout = () => {
@@ -56,7 +65,7 @@ export default class App extends Component {
         <TodoList todos={this.state.todos} deleteTask={this.deleteTask} completeTask={this.completeTask} />
       </div>;
     } else {
-      body = <div className={style.headerList} ><Authorization auth={this.auth}/></div>;
+      body = <div className={style.headerList} ><Authorization auth={this.auth} /></div>;
     }
 
     return (
@@ -73,5 +82,25 @@ export default class App extends Component {
     } else if (where == 'auth') {
       this.setState({ mainPage: false });
     }
+  }
+
+  updateTodosServer = (todos) => {
+    fetch('/api/update', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ login: this.state.user.login, todos: todos })
+    }).then(res => {
+      return res.json();
+    }).then(data => {
+      console.log(data);
+      if (data.ok == false) {
+        alert("Не удалось обновить данные");
+      }
+    }).catch(error => {
+      console.log(error);
+    });
   }
 }
