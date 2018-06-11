@@ -43,8 +43,8 @@ export default class App extends Component {
     this.setState({ user: {}, todos: [] });
   }
 
-  auth = (user) => {
-    this.setState({ user: user, mainPage: true });
+  auth = (user, todos) => {
+    this.setState({ user: user, todos: todos, mainPage: true });
   }
 
   render() {

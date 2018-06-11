@@ -23,11 +23,51 @@ export default class Authorization extends Component {
     handleSubmitLogin = (e) => {
         e.preventDefault();
         // TODO запрос на сервер
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ login: this.state.login, password: this.state.password })
+        }).then(res => {
+            return res.json();
+        }).then(data => {
+            console.log(data);
+            if (data.ok == true) {
+                this.props.auth({ login: data.user.login, password: data.user.password }, data.user.todos);
+            }
+            else {
+                alert(data.message);
+            }
+        }).catch(error => {
+            console.log(error);
+        });
     }
 
     handleSubmitRegister = (e) => {
         e.preventDefault();
         // TODO запрос на сервер
+        fetch('/api/registration', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ login: this.state.login, password: this.state.password })
+        }).then(res => {
+            return res.json();
+        }).then(data => {
+            console.log(data);
+            if (data.ok == true) {
+                this.props.auth({ login: this.state.login, password: this.state.password }, []);
+            }
+            else {
+                alert(data.message);
+            }
+        }).catch(error => {
+            console.log(error);
+        });
     }
 
     render() {
